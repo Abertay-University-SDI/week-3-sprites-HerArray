@@ -4,8 +4,12 @@
 #include "Framework/BaseLevel.h"
 #include "Framework/Input.h"
 #include "Framework/GameObject.h"
+#include "Player.h"
 #include <string.h>
 #include <iostream>
+#include "Cursor.h"
+#include "Enemy.h"
+#include "Background.h"
 
 
 class Level : BaseLevel {
@@ -18,8 +22,15 @@ public:
 	void render() override;
 
 private:
-	// Level objects
-	GameObject testSprite;
-	sf::Texture texture;
+	//GameObjects
 
+	Player player;
+	Enemy enemy1;
+	Enemy enemy2;
+
+	Background background;
+	Cursor cursor;
+	
+	sf::View cameraView;
+	const float VIEW_SPEED = 200.0f;
 };

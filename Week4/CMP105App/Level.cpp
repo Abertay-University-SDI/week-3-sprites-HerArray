@@ -1,4 +1,5 @@
 #include "Level.h"
+#include "player.h"
 
 Level::Level(sf::RenderWindow* hwnd, Input* in)
 {
@@ -6,11 +7,23 @@ Level::Level(sf::RenderWindow* hwnd, Input* in)
 	input = in;
 
 	// initialise game objects
-	texture.loadFromFile("gfx/Mushroom.png");
 
-	testSprite.setTexture(&texture);
-	testSprite.setSize(sf::Vector2f(100, 100));
-	testSprite.setPosition(100, 100);
+	
+	if (!background.loadTexture("gfx/Level1_1.png"))
+	{
+		std::cout << "Didn't load background" << std::endl;
+	}
+	
+	window->setMouseCursorVisible(false);
+
+
+	cameraView = window->getDefaultView();
+	
+	player.setInput(input);
+	player.setWindow(window);
+
+	//enemy1.setWindow(window);
+
 
 }
 
@@ -28,12 +41,14 @@ void Level::handleInput(float dt)
 		window->close();
 	}
 
+	player.handleInput(dt);
 }
+
 
 // Update game objects
 void Level::update(float dt)
 {
-	
+	player.update(dt);
 }
 
 // Render level
@@ -41,7 +56,8 @@ void Level::render()
 {
 	beginDraw();
 
-	window->draw(testSprite);
-
+	window->draw(background);
+	window->draw(player);
+	
 	endDraw();
 }
